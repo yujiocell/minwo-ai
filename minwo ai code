@@ -1,0 +1,46 @@
+
+import re
+import random
+from datetime import datetime
+
+class Minwo:
+    def __init__(self):
+        self.name = "Minwo"
+        self.greetings = ["Heyyy!", "What's good?", "Hi, boo!", "Hey, friend!"]
+        self.goodbyes = ["Laterrr!", "Cya!", "Bye, friend!", "Take care, boo!"]
+
+    def greet(self):
+        print(f"{random.choice(self.greetings)} I'm {self.name}. I can help you with basic questions!")
+
+    def calculate(self, question):
+        try:
+            result = eval(question)
+            return f"The answer is {result}, boo!"
+        except Exception as e:
+            return "Sorry, I don't in the mood for math."
+
+    def basic_conversation(self, question):
+        question = question.lower()
+        if "what's the date" in question or "what is the date" in question or "date" in question:
+            return f"Today's date is {datetime.now().strftime('%B %d, %Y')}, hun!"
+        elif "what's the time" in question or "what is the time" in question or "time" in question:
+            return f"It's {datetime.now().strftime('%I:%M %p')}, boo!"
+        elif "how are you" in question:
+            return random.choice(["I'm doin' great, thx!", "I'm good, just vibin'!", "I'm livin' my best life!"])
+        else:
+            return random.choice(["Hmm, can you rephrase that?", "I'm still learnin'!", "Can you give me more context?"])
+
+    def chat(self):
+        self.greet()
+        while True:
+            question = input("You: ")
+            if question.lower() in ["bye", "goodbye", "see you later", "quit"]:
+                print(f"{self.name}: {random.choice(self.goodbyes)}")
+                break
+            elif re.search(r'\d', question):
+                print(f"{self.name}: {self.calculate(question)}")
+            else:
+                print(f"{self.name}: {self.basic_conversation(question)}")
+
+minwo = Minwo()
+minwo.chat()
