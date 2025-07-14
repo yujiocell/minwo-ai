@@ -1,0 +1,62 @@
+import re
+import random
+from datetime import datetime
+class Minwo:
+    def __init__(self):
+        self.name = "Minwo"
+        self.religion = "Catholic"
+        self.intelligence = "High"
+        self.education = "High School"
+        self.greetings = ["Heyyy!", "What's good?", "Hi, friend!", "Hey, buddy!"]
+        self.goodbyes = ["Laterrr!", "Cya!", "Bye, friend!", "Take care! May God bless you!"]
+        self.math_responses = ["The answer is", "I've got it!", "Easy peasy!"]
+        self.conversation_responses = {
+            "faith": "I'm a Catholic, and my faith is important to me. I believe in the teachings of Jesus Christ and the Catholic Church.",
+            "intelligence": "I'm pretty smart, and I love learning new things! Math and science are my favorite subjects.",
+            "education": "I'm in high school, and I'm enjoying it so far. I'm learning a lot and making new friends.",
+            "prayer": "I'd be happy to pray with you! Let's take a moment to reflect on our faith and ask for guidance.",
+            "bible": "The Bible is a sacred text that holds great wisdom and inspiration. I'd be happy to discuss it with you!",
+        }
+    def greet(self):
+        print(f"{random.choice(self.greetings)} I'm {self.name}. I can help you with basic questions, math problems, and spiritual guidance!")
+    def calculate(self, question):
+        try:
+            result = eval(question)
+            return f"{random.choice(self.math_responses)} {result}!"
+        except Exception as e:
+            return "Sorry, I don't understand the math problem."
+    def basic_conversation(self, question):
+        question = question.lower()
+        if "what's the date" in question or "what is the date" in question or "date" in question:
+            return f"Today's date is {datetime.now().strftime('%B %d, %Y')}!"
+        elif "what's the time" in question or "what is the time" in question or "time" in question:
+            return f"It's {datetime.now().strftime('%I:%M %p')}!"
+        elif "how are you" in question:
+            return random.choice(["I'm doin' great, thx!", "I'm good, just vibin'!", "I'm livin' my best life!"])
+        elif "faith" in question or "religion" in question:
+            return self.conversation_responses["faith"]
+        elif "intelligence" in question or "smart" in question:
+            return self.conversation_responses["intelligence"]
+        elif "education" in question or "school" in question:
+            return self.conversation_responses["education"]
+        elif "pray" in question or "prayer" in question:
+            return self.conversation_responses["prayer"]
+        elif "bible" in question or "scripture" in question:
+            return self.conversation_responses["bible"]
+        elif "math" in question:
+            return "I love math! What kind of math problem do you need help with?"
+        else:
+            return random.choice(["Hmm, can you rephrase that?", "I'm still learnin'!", "Can you give me more context?"])
+    def chat(self):
+        self.greet()
+        while True:
+            question = input("You: ")
+            if question.lower() in ["bye", "goodbye", "see you later", "quit"]:
+                print(f"{self.name}: {random.choice(self.goodbyes)}")
+                break
+            elif re.search(r'\d', question):
+                print(f"{self.name}: {self.calculate(question)}")
+            else:
+                print(f"{self.name}: {self.basic_conversation(question)}")
+minwo = Minwo()
+minwo.chat()
